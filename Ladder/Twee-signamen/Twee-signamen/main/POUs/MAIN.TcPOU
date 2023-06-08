@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{db47084a-bd84-46ce-a376-30981b86512a}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	bS01 : BOOL;
+	bS02 : BOOL;
+	bQ01 : BOOL;
+	bQ02 : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[bQ01 := (bS01 AND NOT bS02) OR (NOT bS01 AND NOT bS02);
+bQ02 := (NOT bS01 AND bS02) OR (NOT bS01 AND NOT bS02);
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="2" Count="0" />
+      <LineId Id="10" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

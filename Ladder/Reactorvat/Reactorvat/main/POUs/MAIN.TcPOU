@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{03b0553b-0ecb-4329-97d1-9c45ad9a1e0a}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	bS01 : BOOL;
+	bS02 : BOOL;
+	bS03 : BOOL;
+	bS04 : BOOL;
+	bS05 : BOOL;
+	
+	bQ01 : BOOL;
+	bQ02 : BOOL;
+	bQ03 : bool;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[bQ01 := bS01 AND ((bS03 OR bS04 OR bS05) OR (bS03 AND bS04 AND bS05));
+bQ02 := bS01 AND ((bS03 AND bS04) OR (bS03 AND bS05) OR (bS04 AND bS05) OR (bS03 AND bS04 AND bS05));
+bQ03 := bS01 AND (bS03 AND bS04 AND bS05) AND NOT bS02;]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="2" Count="0" />
+      <LineId Id="15" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

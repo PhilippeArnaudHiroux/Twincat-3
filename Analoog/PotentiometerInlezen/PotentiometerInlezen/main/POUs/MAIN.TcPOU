@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{b3a14c7f-10c1-45f8-9040-3332cea8f9f6}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	nPmeter AT %I* : INT;
+	nScaledMax AT %Q* : INT := 15;
+	nValue AT %Q* : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Lees de potentiometer in en verschaal deze waarden naar een getal tussen 0 en de variable nScaledMax. Geef voorlopig de initial value van 10 mee.
+
+nValue := REAL_TO_BYTE(nPmeter/32767.0 * nScaledMax);]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="9" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

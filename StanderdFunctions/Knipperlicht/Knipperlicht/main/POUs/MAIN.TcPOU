@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{4d2f82b4-e367-4921-afc8-7510fc6e6aa2}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	bLamp : BOOL;
+	toggle: TON;
+	toggleOff: TOF;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[toggle(IN:= TRUE, PT:= T#2S , Q=>bLamp , ET=> );
+toggleOff(IN:=TRUE , PT:=T#2S , Q=>bLamp , ET=> );]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="18" Count="0" />
+      <LineId Id="16" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

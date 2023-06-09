@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{195af9b6-4a39-46a2-88db-a7368a6993ce}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	nVat1 : INT; //Niveau vat 1
+	nVat2 : INT; //Niveau vat 2
+	nVat3 : INT; //Niveau vat 3
+	
+	nTotaal : int; //Totaal van alle vaten
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//De inhoud van 3 vaten wordt afzonderlijk gemeten en kunnen maximaal 2000L, 3000L en 5000L bevatten.
+//De waarde die men inleest is de hoeveelheid die zich in het vat bevindt (nVat1, nVat2 en nVat3). 
+
+//Simuleer deze ingangen. Bouw een visualisatie die de inhoud van elke tank afzonderlijk alsook de som weergeeft.
+//Maak gebruik van 3 sliders en 1 bar display. Houd eveneens rekening met de maximum waarden.
+
+nTotaal := nVat1 + nVat2 + nVat3;]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="6" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="16" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{e180f79c-02e9-4a9e-a437-96b7bb72ae1d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	nPmeter AT %I* : REAL;
+	nValue AT %Q* : BYTE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Lees de analoge waarde van de potentiometer op de PLC in en converteer naar een waarde van 0 tot en met 15 van het TYPE BYTE.
+//Het kan zijn dat je de 'conversion operators' nodig hebt die je onder de 'input assistant' (F2-toets) terugvinden.
+
+//Uitbreiding: Je kan nu de afzonderlijke bits van deze BYTE waarde toekennen aan de LED's op de PLC.
+//Link vanuit de SW image de BYTE variable aan de afzonderlijke output values (type BOOL) door ‘All Types’ te selecteren (zie afbeelding hieronder).
+//Vergeet natuurlijk geen offset mee te geven.
+//Deze specifieert de bits van de BYTE variable die je wil koppelen met de corresponderende ouput van het type BOOL.
+//Lees de analoge waarde van de potentiometer op de PLC in en converteer naar een waarde van 0 tot en met 15 van het type BYTE. 
+
+nValue := REAL_TO_BYTE(nPmeter / 32767.0 * 15.0);]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="6" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="9" Count="3" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="15" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

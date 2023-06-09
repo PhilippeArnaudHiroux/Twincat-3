@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{69fc64df-0165-4b27-a458-f979cbe45a25}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	bS1 	: BOOL; //Sensor hoog niveau
+	bS2 	: BOOL; //Sensor laag niveau
+	bK1 	: BOOL; //Klep
+	bP1 	: BOOL; //Pomp
+	bStart 	: BOOL; //Start de pomp
+	bStop 	: BOOL; //Stop de pomp
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Een opslagvat heeft twee sensoren in de zijwand die een laag en hoog niveau aanduiden. 
+//Aan de hand van een PLC programma dient er automatisch de klep bovenaan het vat geopend te worden als het vat leeg is. 
+//De tank wordt nu gevuld. Als de tank vol is sluit de klep K1 eveneens automatisch. 
+//Onderaan de tank bevindt zich een pomp P1 die met een start- en stop-drukknop in- en uitgeschakeld kan worden. 
+
+//Als de tank leeg gelopen is, stopt de pomp automatisch en opent de klep K1 bovenaan. 
+//De pomp kan niet ingeschakeld worden zolang de tank gevuld wordt.
+
+//bS1 detecteert geen vloeistof -> false
+//bS2 detecteert geen vloeistof -> false
+//bK1 is open -> true
+//bP1 is aan -> ture
+
+bK1 := NOT bS1 AND NOT bS2;
+bP1 := NOT bStop AND bStart AND NOT bS2;
+IF bStop THEN
+	bStart := FALSE;
+END_IF
+
+IF bK1 THEN
+	bP1 :=  FALSE;
+END_IF
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="2" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="24" Count="2" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="36" Count="1" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="10" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

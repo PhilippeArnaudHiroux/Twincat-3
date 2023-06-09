@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{c11819d4-2292-4e5a-b5ce-27d42d7e428f}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	nGemeten AT %I* : INT;
+	nGevraagd AT %I* : INT;
+	bRed AT %Q* : BOOL;
+	bGreen AT %Q* : BOOL;
+	
+	ntest : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Lees een fysieke potentiometer in als de variabele nGemeten en een potiometer via de visualisatie in als nGevraagd.
+//Als de gemeten waarde kleiner is dan de gewenste waarde met een tolerantie van 10%, dan moet de rode lamp branden.
+//Als de gemeten waarde groter is dan de gewenste waarde met een tolerantie van 10%, dan moet de groene lamp branden.
+
+//bRed := REAL_TO_INT(nGemeten/32767.0*15.0) < nGevraagd * 0.1 OR REAL_TO_INT(nGemeten/32767.0*15.0) * 0.1 < nGevraagd;
+//bGreen := REAL_TO_INT(nGemeten/32767.0*15.0) > nGevraagd * 0.1 OR REAL_TO_INT(nGemeten/32767.0*15.0) * 0.1 > nGevraagd;
+
+bRed := REAL_TO_INT(nGemeten / 32767.0 * 15.0) < nGevraagd * 1.1 OR REAL_TO_INT(nGemeten / 32767.0 * 15.0) < nGevraagd * 0.9;
+bGreen := REAL_TO_INT(nGemeten / 32767.0 * 15.0) > nGevraagd * 1.1 OR REAL_TO_INT(nGemeten / 32767.0 * 15.0) > nGevraagd * 0.9;]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="27" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

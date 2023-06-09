@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{ecbb0e2c-0c4f-4856-8051-766182da0031}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	bKnop1: BOOL;
+    bKnop2: BOOL;
+    bKnop3: BOOL;
+    bKnop4: BOOL;
+    bKnop5: BOOL;
+    bKnop6: BOOL;
+	
+	bLamp : BOOL;
+	out: TOF;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//https://infosys.beckhoff.com/english.php?content=../content/1033/tcplclib_tc2_standard/74405003.html&id=
+
+//In een appartementsgebouw staan in de traphal op de verschillende verdiepingen in totaal 6 drukknoppen.
+//Als men één van de drukknoppen bedient gaat de verlichting branden.
+//De verlichting blijft 3MIN. branden - tijdens de test gebruikt men 3S - vooraleer deze vanzelf uitschakelt.
+//Bij iedere bediening van een drukknop zal de tijd terug beginnen te lopen vanaf 0 en blijven de lampen branden tot de ingestelde tijd is afgelopen.
+
+out(IN:= bKnop1 OR bKnop2 OR bKnop3 OR bKnop4 OR bKnop5 OR bKnop6 , PT:= T#3S , Q=>bLamp , ET=> );
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="12" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

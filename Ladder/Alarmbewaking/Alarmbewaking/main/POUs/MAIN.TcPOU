@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{581570cf-a61c-4834-8825-e22fde672107}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	bS1 : BOOL; //Sensor 1
+	bS2 : BOOL; //Sensor 2
+	bS3 : BOOL; //Sensor 3
+	
+	bL1 : BOOL; //Lamp 1
+	bL2 : BOOL; //Lamp 2
+	bL3 : BOOL; //Lamp 3
+	bL4 : BOOL; //Lamp 4
+	bL5 : BOOL; //Lamp 5
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//In een vat wordt een proces bewaakt met 3 sensoren
+//	* Sensor1 meet de druk. TRUE bij een te hoge druk.
+//	* Sensor2 meet de temperatuur. TRUE bij een te hoge temperatuur.
+//	* Sensor3 meet het vloeistofniveau. FALSE bij een te laag niveau.
+
+//Er zijn 5 lampen die als indicator dienen voor het proces:
+//	* Lamp1 gaat aan als de druk te hoog is.
+//	* Lamp2 gaat aan als de temperatuur te hoog is.
+//	* Lamp3 gaat aan als het niveau te laag is.
+//	* Bovenstaande lampen gaan automatisch uit als er geen melding meer gegeven hoeft te worden.
+//	* Lamp4 gaat aan als er zich twee alarmen gelijktijdig voordoen. Van zodra er geen twee alarmen meer zijn gaat deze lamp uit. 
+//	  Bij drie alarmen gaat deze lamp ook uit.
+//	* Lamp5 gaat aan als er drie alarmen zijn. Deze lamp blijft aan, ook nadat er geen drie alarmen meer zijn. 
+//    De lamp kan enkel uitgeschakeld worden met een extra drukknop.
+
+bL1 := bS1;
+bL2 := bS2;
+bL3 := bS3;
+bL4 := (bS1 AND bS2) OR (bS1 AND bS3) OR (bS2 AND bS3) AND NOT(bS1 AND bS2 AND bS3);
+bL5 := ]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="6" Count="0" />
+      <LineId Id="8" Count="2" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="4" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="32" Count="3" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{c50d3270-a011-4061-a773-e2cab7da0334}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	//Variabelen
+	bAllesAan : BOOL;
+	bAllesUit : BOOL;
+	
+	//Druktoetsen
+	bDrukVoorduer : BOOL;
+	bDrukKeuken1 : BOOL;
+	bDrukKeuekn2 : BOOL;
+	bDrukLiving1a : BOOL;
+	bDrukLiving1b : BOOL;
+	bDrukLiving2a : BOOL;
+	bDrukLiving2b : BOOL;
+	
+	//Lichten
+	bLichtKeueken : BOOL;
+	bLichtLiving1 : BOOL;
+	bLichtLiving2 : BOOL;
+	
+	//Functie blokken
+	fbLichtKeueken : FB_Light;
+	fbLichtLiving1 : FB_Light;
+	fbLichtLiving2 : FB_Light;
+	
+	fbLankKlikAlleUit : FB_ShortLongClick;
+	fbDubbelKlikAlleAan : FB_SingleDoubleClick;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbDubbelKlikAlleAan(
+	bSwitch := bDrukVoorduer,
+	tSwitchTime := T#2S,
+	bDoubleClick => bAllesUit
+);
+
+fbLankKlikAlleUit(
+	bSwitch := bDrukVoorduer,
+	tSwitchTime := T#5S,
+	bLongClick => bAllesUit
+);
+
+fbLichtKeueken(
+	bOn := bAllesAan,
+	bOff := bAllesUit,
+	bToggle := bDrukKeuken1 OR bDrukKeuekn2,
+	bLight => bLichtKeueken
+);
+
+fbLichtLiving1(
+	bOn := bAllesAan,
+	bOff := bAllesUit,
+	bToggle := bDrukLiving1a OR bDrukLiving2b,
+	bLight => bLichtLiving1
+);
+
+fbLichtLiving2(
+	bOn := bAllesAan,
+	bOff := bAllesUit,
+	bToggle := bDrukLiving1b OR bDrukLiving2a,
+	bLight => bLichtLiving2
+);
+	]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="88" Count="31" />
+      <LineId Id="58" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

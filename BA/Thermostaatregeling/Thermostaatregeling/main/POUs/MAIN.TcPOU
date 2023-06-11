@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{7c514f10-f08c-49ec-8b4f-dadb8806eac2}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	bAanOfUit : BOOL;
+	nPot1 	: INT; //Potentiometer 1 ingestelde waarden
+	nPot2 	: INT; //Potentiometer 2 huidige waarden
+	bL1 	: BOOL; //Lamp
+	
+	DTTime : DATE_AND_TIME;
+	
+
+	
+	
+	
+	fbTemp : FB_WeeklyTimeSwitch;
+	fbTime : FB_LocalSystemTime;
+
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//FB_WeeklyTimeSwitch -> https://infosys.beckhoff.com/english.php?content=../content/1033/tcplclibbabasic/11640109195.html&id=
+//FB_LocalSystemTime -> https://infosys.beckhoff.com/english.php?content=../content/1033/tcplclib_tc2_utilities/35008651.html&id=
+
+//Met de kamerthermostaat wordt de temperatuur in de huiskamer geregeld.
+//Is de temperatuur lager dan de ingestelde waarde -1°C dan schakelt de verwarming in en als deze hoger is dan de 
+//ingestelde waarde +1°C dan schakelt de verwarming uit.
+//	*Potentiometer 1 bepaald de ingestelde temperatuur van 10°C tot 30°C (verschaalt).
+//	*Potentiometer 2 bepaald de huidige temperatuur van -30°C tot 40°C (verschaalt).
+//	*Geef de temperaturen weer via een Bar Display
+//	* Een LAMP geeft aan wanneer de verwarming ingeschakeld is.
+
+//Deze thermostaatregeling mag enkel gebeuren tijdens een bepaalde tijdsperiode, met een begin- en eindtijdstip voor iedere dag van de week.
+//Gebruik hiervoor de FB_WeeklyTimeSwitch uit de TcBABasic.lib en bekijk de structure TIMESTRUCT nader voor de implementatie.
+DTTime := SYSTEMTIME_TO_DT(fbTime.systemTime);
+
+IF nPot2 < nPot1 -1 THEN
+	bAanOfUit :=  TRUE;
+ELSIF nPot2 > nPot1 +1 THEN
+	bAanOfUit := FALSE;
+END_IF
+
+fbTemp(
+	bEnable:= bAanOfUit, 
+	tCurrentDateTime:= DTTime, 
+	tSwitchOnTime:= TOD#11:30, 
+	tSwitchOffTime:= TOD#11:55, 
+	bSunday:= TRUE, 
+	bMonday:= , 
+	bTuesday:= , 
+	bWednesday:= , 
+	bThursday:= , 
+	bFriday:= , 
+	bSaturday:= , 
+	bOutput=> bL1, 
+	bEdgeOn=> , 
+	bEdgeOff=> );
+
+fbTime(
+	sNetID:= , 
+	bEnable:= TRUE, 
+	dwCycle:=  1, 
+	dwOpt:= , 
+	tTimeout:= , 
+	bValid=> , 
+	systemTime=> , 
+	tzID=> );
+	
+	]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="2" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="14" Count="1" />
+      <LineId Id="10" Count="3" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="26" Count="13" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="47" Count="8" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="43" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

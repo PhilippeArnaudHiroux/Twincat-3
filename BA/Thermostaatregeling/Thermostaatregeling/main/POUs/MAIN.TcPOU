@@ -46,7 +46,7 @@ fbTemp(
 	bEnable:= bAanOfUit, 
 	tCurrentDateTime:= DTTime, 
 	tSwitchOnTime:= TOD#11:30, 
-	tSwitchOffTime:= TOD#11:55, 
+	tSwitchOffTime:= TOD#12:33, 
 	bSunday:= TRUE, 
 	bMonday:= , 
 	bTuesday:= , 
